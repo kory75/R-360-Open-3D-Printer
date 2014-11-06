@@ -1,39 +1,29 @@
 //X axis 
-//Publised settings
-include <./settings.scad>;
-show = "motor"; //motor,idler
 
 //Public settings 
-x_rod = m8;
-z_rod = m10+3;
+z_rod_with_gap = z_rod+3;
 	//m5 for 5mm threaded rod, m16 for screw
-z_thread = m5; 
 z_linear_bearing_bolt = m4;
 z_linear_bearing_bolt_distance = 14.5;
 
-x_rod_distance = 46;
-x_rod_vertical_offset=3 ;
+//x_rod_vertical_offset=3;
 x_rod_horizontal_offset=3 ;
 	// m4 90mm - 12 mm (2x frame) -4mm bolt - 6mm gap
 main_width_max = 90- 12 -4 - 6;
 main_lenght = 15;
 main_height = x_rod_distance + x_rod + (x_rod_vertical_offset *2);
 	
-z_rod_block_width = 40;
+z_rod_block_width = nema17_width;
 z_rod_block_lenght = 30;
 z_rod_block_thickness = 6;
-
-motor_holder_width = 40;
-motor_holder_lenght = 15;
-motor_holder_thickness = 6;
 
 motor_holder_horizontal_offset = x_rod_vertical_offset*2 + x_rod*2 ;
 
 rod_thread_gap = 9;
 thread_hole= m5+1;
 
-//nema17
-nema17_gap = 5;
+//nema
+nema_gap = 5;
 
 module x_axis(show){
 	
@@ -74,7 +64,7 @@ module x_axis(show){
 		difference(){
 			cube([z_rod_block_width,z_rod_block_lenght+rod_thread_gap,z_rod_block_thickness], center=false);
 			translate([z_rod_block_width/2,z_rod_block_lenght/2+rod_thread_gap,-1]){
-				cylinder(h = z_rod_block_lenght+2, r=z_rod,  center = false, $fs=detail);
+				cylinder(h = z_rod_block_lenght+2, r=z_rod_with_gap,  center = false, $fs=detail);
 				translate([z_linear_bearing_bolt_distance,0,0]){
 					cylinder(h = z_rod_block_lenght+2, r=z_linear_bearing_bolt,  center = false, $fs=detail);
 				}
@@ -82,7 +72,7 @@ module x_axis(show){
 					cylinder(h = z_rod_block_lenght+2, r=z_linear_bearing_bolt,  center = false, $fs=detail);
 				}
 				//thread hole
-				translate([0,-rod_thread_gap-z_rod,0]){
+				translate([0,-rod_thread_gap-z_rod_with_gap,0]){
 					cylinder(h = z_rod_block_lenght+2, r=thread_hole,  center = false, $fs=detail);
 				}
 				
@@ -97,10 +87,10 @@ module x_axis(show){
 				cube([motor_holder_width,motor_holder_lenght,motor_holder_thickness], center=false);		
 			}	
 		}
-		translate([motor_holder_horizontal_offset+(motor_holder_thickness)/2,main_lenght+nema17_middle+nema17_bolt_size+nema17_gap,main_height/2]){
+		translate([motor_holder_horizontal_offset+(motor_holder_thickness)/2,main_lenght+nema_middle+nema_bolt_size+nema_gap,main_height/2]){
 			rotate([0,90,0]){
 				linear_extrude(height = motor_holder_thickness+2, center = true, convexity = 10)	{
-					Nema17_mount();	
+					Nema_mount();	
 				}
 			}
 		}
@@ -110,6 +100,6 @@ module x_axis(show){
 	//x idler
 }
 
-x_axis(show);
+
 
 
