@@ -1,4 +1,4 @@
-R-360-Teli-3D-Printer
+R-360-Open-3D-Printer
 =====================
 
 2nd generation Open Source Polar Printer. 
