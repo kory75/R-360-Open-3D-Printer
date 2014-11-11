@@ -5,11 +5,10 @@ set_motors(x_motor,y_motor,z_motor,e_motor); //TODO
 //include part files
 include <./libs/spacer.scad>
 include <./frame/frame.scad>
+include <./bed.scad>
 include <./Z-axis.scad>
 include <./X-axis.scad>
 include <./Y-axis.scad>
-
-
 
 module render_parts(){
 //lasercut parts
@@ -20,6 +19,11 @@ translate([z_left_vertical_offset+spacer_lenght/2,printing_height+bottom_height+
 translate([z_left_vertical_offset+spacer_lenght/2,z_bottom-z_top+20+spacer_height/2,frame_thickness/2]) rotate([90,-90,0]) z_axes("bottom_rod",detail);
 //rod	
 #translate([60.5,41,40]) rotate([-90,90,0]) cylinder(h = 470, r=m10,  center = false, $fs=detail);
+translate([z_left_vertical_offset+spacer_lenght/2+z_rod_block_width/2-0.5,z_bottom-z_top+20+spacer_height/2+300,frame_thickness/2+main_height-z_rod_block_width/2+frame_gap/2-1]) rotate([90,90,0]) x_axis("idler");
+
+#translate([20,22,z_rod_block_width/2-2]) rotate([0,0,90]) import("./Assembly/libs/nema17.stl");
+#translate([20,71,40]) rotate([-90,90,0]) cylinder(h = 430, r=m5,  center = false, $fs=detail);
+
 
 linear_extrude(height = frame_thickness, center = true, convexity = 10)	{
 	if(show_bed_top) {

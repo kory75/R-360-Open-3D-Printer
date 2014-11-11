@@ -8,6 +8,8 @@ y_gear_thickness = frame_thickness > 0 ? frame_thickness : 1;
 //Protected
 //Change these to fine tune your printer. For Pro user only
 
+frame_minimum_bolt_gap = max(frame_minimum_bolt_gaps,spacer_lenght)/2;
+
 //nema motor size (from publised variables)
 motor_width = nema_width;
 motor_lenght = nema_lenght;
@@ -21,8 +23,8 @@ slip_ring_motor_gap = 11;
 //frame TODO calculate these from rod and motor size values
 bottom_height = (max(slip_ring_width,motor_lenght) + 20); //20 is the Y holder around the motor & slip ring 
 top_height = 20;
-left_width = motor_width + 10 + z_rod + 10; //see bellow (TODO)
-right_width = motor_width + 10 + z_rod + 10 + motor_width; //first +10 is Z base width, the secound +10 is the X holder rod  motor distance (TODO)
+left_width = motor_width + frame_minimum_bolt_gap + spacer_lenght  + z_rod + 10; //see bellow (TODO)
+right_width = motor_width + frame_minimum_bolt_gap + spacer_lenght  + z_rod + 10 + motor_width ; //first +10 is Z base width, the secound +10 is the X holder rod  motor distance (TODO)
 
 //legs (local)
 legs_height = 10;
@@ -47,21 +49,12 @@ y_bolt_top =  bottom_height - 10; //(TODO)
 //z holes
 z_bolt = frame_bolt*hole_adjustment;
 	//distance from edge
-z_left_vertical_offset  = motor_width+(11/2)+2; //??horizontal?? 11 is the width of the z base midlle part (TODO)
-z_right_vertical_offset = motor_width+(11/2)+2; //??horizontal?? 11 is the width of the z base midlle part (TODO)
-z_bottom = 47;
-z_top = 20;
+z_left_vertical_offset  = motor_width+spacer_lenght+frame_minimum_bolt_gap+z_bolt/2;
+z_right_vertical_offset = motor_width+spacer_lenght+frame_minimum_bolt_gap+z_bolt/2;
+z_bottom = 47; //TODO calculate from Y Base
+z_top = frame_minimum_bolt_gap; //From the top for now
 
-//disc
-disc_lower_arms = 30;
-lower_disc_core = 60;
 
-//disc_holes
-bed_bolt = m3;
-bed_shaft = m8;
-bed_bolt_offset = 8; // from edge ?!
-
-inner_bed_bolt_offset = 30; //from centre
 
 ////lcd 
 
@@ -76,6 +69,9 @@ module z_holes(){
 	union(){
 		//left bottom
 		translate([z_left_vertical_offset,z_bottom,0]){
+			circle(z_bolt);
+		}
+		translate([spacer_lenght/2,z_bottom,0]){
 			circle(z_bolt);
 		}
 		//right bottom
@@ -149,116 +145,5 @@ module frame_back(){
 	frame();
 }
 
-module outer_bolt_holes(){
-		//top
-		translate([0,printing_width/2-bed_bolt_offset,0]){
-			circle(bed_bolt);
-		}
-		//bottom
-		translate([0,-printing_width/2+bed_bolt_offset,0]){
-			circle(bed_bolt);
-		}
-		//left
-		translate([-printing_width/2+bed_bolt_offset,0,0]){
-			circle(bed_bolt);
-		}
-		//right
-		translate([printing_width/2-bed_bolt_offset,0,0]){
-			circle(bed_bolt);
-		}
-}
 
 
-module disc_bottom(){
-	translate([(printing_width+2*bed_vertical_gaps)/2+left_width,printing_height+bed_carrige_tickness/2+bottom_height-(printing_width+bed_vertical_gaps)/2,0]){
-		union(){
-			square([printing_width,disc_lower_arms],center=true);
-			square([disc_lower_arms,printing_width],center=true);
-			circle(lower_disc_core);
-		}
-		circle(m8);
-		outer_bolt_holes();
-	}
-}
-
-module disc_top(){
-	difference(){
-		circle(printing_width/2);
-		//outer_bolt_holes();
-	}
-}
-
-module heater_rim(){
-	difference(){
-		circle(printing_width/2);
-		if(bed_shape=="circle"){
-			circle(heater_width/2+0.5);
-		}
-		if(bed_shape=="square"){
-			translate([-heater_width/2,-heater_width/2,0]){
-				square([heater_width+0.5,heater_width+0.5],centre = true);
-			}
-		}
-		outer_bolt_holes();
-	}
-}
-
-module y_large_gear(){
-			echo ("rendering gear...");
-			difference(){
-				gear(number_of_teeth=90,circular_pitch=225, diametral_pitch=false,gear_thickness = y_gear_thickness,rim_thickness = y_gear_thickness,hub_thickness = y_gear_thickness, bore_diameter = 12,circles=0,involute_facets=5);
-				translate([0,0,frame_thickness/2]){
-					inner_bolt_holes();
-					y_cable_hole();
-				}
-				
-			}
-		
-}
-
-module y_small_gear(){
-			echo ("rendering gear...");
-			echo ("gear thickness:");
-			echo (y_gear_thickness);
-			translate([0,100,0]){
-				gear(number_of_teeth=15,circular_pitch=225, diametral_pitch=false,gear_thickness = y_gear_thickness,rim_thickness = y_gear_thickness,hub_thickness = y_gear_thickness, bore_diameter = 3,circles=0,involute_facets=5);
-			}
-		
-}
-
-
-//TODO make parameters variables
-module gear_spacer(){
-	difference(){
-		circle(35);
-		circle(12);
-		inner_bolt_holes();
-		y_cable_hole();
-	}
-}
-
-module inner_bolt_holes(){
-	
-		//top
-		translate([0,inner_bed_bolt_offset,0]){
-			circle(bed_bolt);
-		}
-		//bottom
-		translate([0,-inner_bed_bolt_offset,0]){
-			circle(bed_bolt);
-		}
-		//left
-		translate([-inner_bed_bolt_offset,0,0]){
-			circle(bed_bolt);
-		}
-		//right
-		translate([inner_bed_bolt_offset,0,0]){
-			circle(bed_bolt);
-		}
-}
-
-module y_cable_hole(){
-	translate([20,0,0]){
-		square([10,10],center =true);
-	}
-}

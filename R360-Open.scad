@@ -21,6 +21,9 @@ frame_bolt_lenght = 90;
 frame_gap = frame_bolt_lenght - (frame_thickness*2) - frame_nut_thickness;
 frame_bolt = m5;
 
+//Minimum distance of holes from the outer edge of the frame 
+frame_minimum_bolt_gaps = 10;
+
 //Printing Dimensions
 printing_height = 400; //450
 printing_width = 300; //140
@@ -64,8 +67,8 @@ show_bed_bottom = 0;
 show_heater_rim = 0;
 show_gear_spacer = 0;
 
-show_large_y_gears = 1;
-show_small_y_gears = 0;
+show_large_y_gears = 0;
+show_small_y_gears = 1;
 
 show_z_axis_top = 0;
 show_z_axis_bottom = 0;

@@ -19,7 +19,7 @@ z_rod_block_thickness = 6;
 
 motor_holder_horizontal_offset = x_rod_vertical_offset*2 + x_rod*2 ;
 
-rod_thread_gap = 9;
+rod_thread_gap = 32.5; //TODO Nema width/2 + Spacer Width +  Z rod Width/2
 thread_hole= m5+1;
 
 //nema
@@ -98,6 +98,9 @@ module x_axis(show){
 
 	}
 	//x idler
+	if(show=="idler"){
+		//TODO
+	}
 }
 
 

@@ -5,6 +5,7 @@ set_motors(x_motor,y_motor,z_motor,e_motor); //TODO
 //include part files
 include <./libs/spacer.scad>
 include <./frame/frame.scad>
+include <./bed.scad>
 include <./Z-axis.scad>
 include <./X-axis.scad>
 include <./Y-axis.scad>
