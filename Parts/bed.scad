@@ -1,5 +1,8 @@
 //bed
 
+//default 0 for laser cutting (6mm is recomended to fit with the plastic parts)
+y_gear_thickness = frame_thickness > 0 ? frame_thickness : 1;
+
 //disc
 disc_lower_arms = 30;
 lower_disc_core = 60;

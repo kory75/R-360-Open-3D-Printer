@@ -1,17 +1,29 @@
-//Renderer
+//Render Parts for production
+//Render all 3D printed of lasercut
+echo("Loading Layout - Assembler");
 
-set_motors(x_motor,y_motor,z_motor,e_motor); //TODO
+module assembly(){
+	translate([0,0,0]) y_base();
+	translate([100,0,0]) z_axes("top",detail);
+	translate([200,0,0]) z_axes("top",detail);
+	translate([100,20,0]) z_axes("bottom",detail);
+	translate([200,20,0]) z_axes("bottom",detail);
+	translate([100,60,0]) z_axes("bottom_rod",detail);
+	translate([200,60,0]) z_axes("bottom_rod",detail);
+	//translate([-100,0,0]) x_axis("motor");
+	//translate([-100,100,0]) x_axis("idler");
+	
+	//linear_extrude(height = frame_thickness, center = true, convexity = 10) frame();
+	//linear_extrude(height = frame_thickness, center = true, convexity = 10) frame_back();
+	//linear_extrude(height = frame_thickness, center = true, convexity = 10) disc_top();
+	//linear_extrude(height = frame_thickness, center = true, convexity = 10) disc_bottom();
+	//linear_extrude(height = frame_thickness, center = true, convexity = 10) gear_spacer();
+	//linear_extrude(height = frame_thickness, center = true, convexity = 10) heater_rim();
+	//y_large_gear();
+	//y_small_gear();
+}	
 
-//include part files
-include <./libs/spacer.scad>
-include <./frame/frame.scad>
-include <./bed.scad>
-include <./Z-axis.scad>
-include <./X-axis.scad>
-include <./Y-axis.scad>
-
-module render_parts(){
-//lasercut parts
+/*
 
 linear_extrude(height = frame_thickness, center = true, convexity = 10) frame();
 translate([0,0,frame_gap+frame_thickness]) linear_extrude(height = frame_thickness, center = true, convexity = 10) frame_back();
@@ -69,3 +81,4 @@ if(show_y_base){
 }
 
 }
+*/

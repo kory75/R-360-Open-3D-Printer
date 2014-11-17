@@ -1,13 +1,10 @@
 //Motors lib
-m3=1.5;
-m4=2;
-
-echo ("Loading Motors Lib....");
+echo ("Loading Lib - Motor Mount");
 //Deatils of the Motors [Nema 14, Nema 17, Nema 23]
 //half of the distance of the bolts from each other
 nema_bolt_offset = [13,15.5,23.57];
 //The bolt used to secure the motor
-nema_bolt_size = [m3+01,m3+0.1,m4+0.1];
+nema_bolt_size = [m3*hole_adjustment,m3*hole_adjustment,m4*hole_adjustment];
 //Circural eleavation around the shaft on the top of the motor
 nema_middle = [12,17,19.5];
 //width of the motor 
@@ -17,41 +14,38 @@ nema_lenght = [28,45,56];
 //shaft of the motor 
 nema_shaft = [5,5,6.35];
 
-//Ofseting the motor holes away of the edge of the motors to give a small gap.
-motor_edge_gap=-2;
-motor_holder_thickness = 6; //TODO move this to Printer.scad
+//Offseting the motor to give a small gap for easy mounting
+motor_edge_gap=2; 
 
-
-module nema_mount(axe){
+module motor_mount(axe){
 	difference(){
-		cube([nema_width[axe],nema_bolt_offset[axe]+motor_edge_gap,motor_holder_thickness],center=false);
-		translate([nema_width[axe]/2,nema_width[axe]/2-motor_edge_gap,motor_holder_thickness/2]){
+		cube([nema_width[axe],motor_holder_lenght(axe),motor_holder_thickness],center=true);
+		translate([0,nema_width[axe]/2+motor_edge_gap-nema_bolt_offset[axe]/2,0]){
 			linear_extrude(height = motor_holder_thickness+2, center = true, convexity = 10)	{
-				nema_mount_holes(axe);	
+				motor_mount_holes(axe);	
 			}
 		}
 	}
 }
 
 //Axes can be [X,Y,Z,E] 
-module nema_mount_holes(axe){
+module motor_mount_holes(axe){
 	union(){ 
 		translate([nema_bolt_offset[axe],nema_bolt_offset[axe],0]){
-					circle(nema_bolt_size[axe]);
+					circle(nema_bolt_size[axe],center = true);
 				}
 		translate([-nema_bolt_offset[axe],nema_bolt_offset[axe],0]){
-					circle(nema_bolt_size[axe]);
+					circle(nema_bolt_size[axe],center = true);
 				}
 		translate([nema_bolt_offset[axe],-nema_bolt_offset[axe],0]){
-					circle(nema_bolt_size[axe]);
+					circle(nema_bolt_size[axe],center = true);
 				}
 		translate([-nema_bolt_offset[axe],-nema_bolt_offset[axe],0]){
-					circle(nema_bolt_size[axe]);
+					circle(nema_bolt_size[axe],center = true);
 				}
-		circle(nema_middle[axe]);
+		circle(nema_middle[axe],center=true);
 		
 	}
-}
+}	
 
-nema_mount(1);	
-
+function motor_holder_lenght(axe) = nema_width[axe]-nema_bolt_offset[axe]*2+motor_edge_gap;

@@ -1,18 +1,7 @@
-//Renderer
-
-set_motors(x_motor,y_motor,z_motor,e_motor); //TODO
-
-//include part files
-include <./libs/spacer.scad>
-include <./frame/frame.scad>
-include <./bed.scad>
-include <./Z-axis.scad>
-include <./X-axis.scad>
-include <./Y-axis.scad>
-
-
-
-module render_parts(){
+//Render Parts in position x0,y0,z0
+//Render one part at the time only
+echo("Loading Layout - Individual");
+module individual(){
 //lasercut parts
 if(frame_thickness > 0){
 	

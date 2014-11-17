@@ -1,90 +1,69 @@
-//R-360 Teli
-//use <MCAD/involute_gears.scad>;
-include <../../MCAD-master/involute_gears.scad>;
+//Frame
+//test vars ! TODO should come form other parts (y-base, x-ends, carriage)
+x_axe_height = 90;
+carriage_height = 85;
+z_rod_x_main_offset = 8;
+x_main_width = 10;
+x_idler_width = 20;
+//slip_ring_height = 35;
+//slip_ring_width = 20;
 
-//default 0 for laser cutting (6mm is recomended to fit with the plastic parts)
-y_gear_thickness = frame_thickness > 0 ? frame_thickness : 1;
 
-//Protected
-//Change these to fine tune your printer. For Pro user only
+echo ("Loading Part - Frame");
+//Private Variables
+top_height = frame_edge_width + spacer_height + max(x_axe_height,carriage_height);
+left_width = frame_edge_width + spacer_lenght + nema_width[z_axe] + spacer_lenght + z_rod_x_main_offset + x_main_width + x_idler_width;
+right_width = frame_edge_width + spacer_lenght + nema_width[z_axe] + spacer_lenght + z_rod_x_main_offset + x_main_width +  nema_width[x_axe];
+bottom_height = max(slip_ring_height + slip_ring_gap + y_bearing_height + y_bearing_rim_height + y_nut_height + frame_edge_width,nema_lenght[y_axe] + motor_holder_thickness + frame_edge_width);
 
-frame_minimum_bolt_gap = max(frame_minimum_bolt_gaps,spacer_lenght)/2;
-
-//nema motor size (from publised variables)
-motor_width = nema_width;
-motor_lenght = nema_lenght;
-
-//distance from y shaft TODO this should be calculated depending on the motor and shaft, slipring sizes
-slip_ring_width = 56;
-slip_ring_lenght = 38;
-	//this should be equale of y-base width (spacer width?)
-slip_ring_motor_gap = 11;
-
-//frame TODO calculate these from rod and motor size values
-bottom_height = (max(slip_ring_width,motor_lenght) + 20); //20 is the Y holder around the motor & slip ring 
-top_height = 20;
-left_width = motor_width + frame_minimum_bolt_gap + spacer_lenght  + z_rod + 10; //see bellow (TODO)
-right_width = motor_width + frame_minimum_bolt_gap + spacer_lenght  + z_rod + 10 + motor_width ; //first +10 is Z base width, the secound +10 is the X holder rod  motor distance (TODO)
-
-//legs (local)
+//legs size and position
 legs_height = 10;
-legs_width = 20;
+legs_width = 30;
 leg_offset = left_width/2 - legs_width /2;
 
 //bed (local)
-bed_vertical_gaps = 15;
-bed_carrige_tickness = 30;
-
-//private
-//You should not change these values
+bed_vertical_gaps = 15; // TODO Carriege width (two halfs)
+//slipring gear gap, gear, spacer, arms, heter rim, print bed
+bed_carrige_tickness = 6*6; //6mm parts 
 
 //y holes
-y_bolt = frame_bolt*hole_adjustment;
-
-
-y_bolt_center_offset = slip_ring_width/2 + slip_ring_motor_gap / 2;
-y_bolt_bottom = bottom_height - (max(slip_ring_width,motor_lenght) + (20 /2) ); // +10 for the top, +10 for the bottom gap around motor & slip ring hole is in the middle of them (TODO)
+//y_bolt = frame_bolt*hole_adjustment; //TODO we should use value directly to save memory
+y_bolt_center_offset = slip_ring_width/2 + spacer_lenght + nema_lenght[y_axe] /2;
+y_bolt_bottom = bottom_height - (max(slip_ring_width,nema_lenght[y_axe]) + (20 /2) ); // +10 for the top, +10 for the bottom gap around motor & slip ring hole is in the middle of them (TODO)
 y_bolt_top =  bottom_height - 10; //(TODO)
 
 //z holes
-z_bolt = frame_bolt*hole_adjustment;
 	//distance from edge
-z_left_vertical_offset  = motor_width+spacer_lenght+frame_minimum_bolt_gap+z_bolt/2;
-z_right_vertical_offset = motor_width+spacer_lenght+frame_minimum_bolt_gap+z_bolt/2;
+z_left_vertical_offset  = nema_width[z_axe]+spacer_lenght+frame_bolt*hole_adjustment/2;
+z_right_vertical_offset = nema_width[z_axe]+spacer_lenght+frame_bolt*hole_adjustment/2;
 z_bottom = 47; //TODO calculate from Y Base
-z_top = frame_minimum_bolt_gap; //From the top for now
+z_top = frame_edge_width + spacer_height/2;
 
-
-
-////lcd 
-
-
-//Ramps 1.4
 
 
 module z_holes(){
 	echo("z rod lenght:",printing_height+bottom_height+top_height+bed_carrige_tickness-z_top-z_bottom+spacer_height,"mm");
 	echo("z lead screw lenght:",printing_height+10+20,"mm?"); //TODO add nut height and coupling half height
-	echo("x rod lenght",printing_width+nema_width+10+2*10,"mm?"); //TODO bearing width, 2x X midsection width
+	echo("x rod lenght",printing_width+nema_width[x_axe]+10+2*10,"mm?"); //TODO bearing width, 2x X midsection width
 	union(){
 		//left bottom
 		translate([z_left_vertical_offset,z_bottom,0]){
-			circle(z_bolt);
+			circle(frame_bolt*hole_adjustment);
 		}
 		translate([spacer_lenght/2,z_bottom,0]){
-			circle(z_bolt);
+			circle(frame_bolt*hole_adjustment);
 		}
 		//right bottom
 		translate([printing_width+left_width+right_width+2*bed_vertical_gaps-z_left_vertical_offset,z_bottom,0]){
-			circle(z_bolt);
+			circle(frame_bolt*hole_adjustment);
 		}
 		//left top
 		translate([z_left_vertical_offset,printing_height+bottom_height+top_height+bed_carrige_tickness-z_top,0]){
-			circle(z_bolt);
+			circle(frame_bolt*hole_adjustment);
 		}
 		//right top
 		translate([printing_width+left_width+right_width+2*bed_vertical_gaps-z_left_vertical_offset,printing_height+bottom_height+top_height+bed_carrige_tickness-z_top,0]){
-			circle(z_bolt);
+			circle(frame_bolt*hole_adjustment);
 		}
 	}
 }
@@ -92,16 +71,15 @@ module z_holes(){
 module y_holes(){
 	union(){
 		translate([(printing_width+left_width+right_width+2*bed_vertical_gaps+y_bolt_center_offset)/2,y_bolt_bottom,0]){
-			circle(m3);
+			circle(frame_bolt*hole_adjustment);
 		}
 		translate([(printing_width+left_width+right_width+2*bed_vertical_gaps+y_bolt_center_offset)/2,y_bolt_top,0]){
-			circle(m3);
+			circle(frame_bolt*hole_adjustment);
 		}
 	}
 }
 
 module ramps_1_4_holes(){
-
 }
 
 module lcd_holes(){
@@ -142,8 +120,13 @@ module frame(){
 }
 
 module frame_back(){
-	frame();
+	difference(){
+		frame();
+		fillament_holders();
+	}
 }
 
+module fillament_holders(){
 
+}	
 
