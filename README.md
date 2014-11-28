@@ -78,6 +78,13 @@ If you change a bolt, motor, bearing, used than all parts are recalculated.
 	This file can be extended, but old values should not be altered.
 
 
+##Software dependencies
+
+The software is written in openSCAD. 
+
+It requires the latest
+MCAD/involute_gears.scad 
+
 ##Documentation
 
 Under development!
