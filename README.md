@@ -29,6 +29,7 @@ If you change a bolt, motor, bearing, used than all parts are recalculated.
    This settings are publicised, they can be freely edited to fine tune your printer.  
 
 2. Layout
+  
   1. Renderer  
 
   Is a core file.  
@@ -47,6 +48,7 @@ If you change a bolt, motor, bearing, used than all parts are recalculated.
   It also helps at building the printer, because it clearly shows how the parts fit together.
 
 3. Parts
+  
   This files are the individual parts of the printer.  
 
   * Part - Status
@@ -62,10 +64,12 @@ If you change a bolt, motor, bearing, used than all parts are recalculated.
   * Filament Holder - Planed
   * Electronic board holder - Planed
 
-4. Vitamins
+4. Vitamins  
+	
 	Off the shelf parts for visualisation only.
 
-5. Libs
+5. Libs  
+	
 	Libraries sub parts and other libraries
 
 6. Settings
