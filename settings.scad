@@ -1,7 +1,9 @@
 //Settings and 
 echo ("Loading Settings");
-//Public variables
-//You can change these values if you know what you are doing
+//Protected variables
+//
+//You can add your own uniqe settings to the end of the file (imerial bolts, motor bearring sizes, etc..)
+//
 
 detail = 200;
 $fn = detail;
@@ -35,3 +37,14 @@ e_axe = 3;
 //Production methods
 3d_printed = 0;
 lasercut = 1;
+
+//+++++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++               ++++++++++++++++++
+//++++++++++++ User Settings ++++++++++++++++++
+//++++++++++++               ++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++
+//
+//You can add your own uniqe settings (imerial bolts, motor bearring sizes)
+//
+
+

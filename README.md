@@ -60,6 +60,11 @@ Of the shelf parts for visualisation only.
 ### Libs
 Libraries sub parts and other libraries
 
+###Settings
+
+This file is contain general settings like bolt, rod or motor sizes.
+This file can be extended, but old values should not be altered.
+
 ##Printer Parts
 
 This is under development! 
