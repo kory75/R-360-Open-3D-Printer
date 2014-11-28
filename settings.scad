@@ -22,6 +22,9 @@ m8 = 4;
 m10 = 5;
 m12 = 6;
 m16 = 8;
+m20 = 10;
+
+//Following settings are needed for rendering the parts, pro users only!
 
 //layout types
 individual = 0;
@@ -37,6 +40,8 @@ e_axe = 3;
 //Production methods
 3d_printed = 0;
 lasercut = 1;
+
+//End of pro section! ;)
 
 //+++++++++++++++++++++++++++++++++++++++++++++
 //++++++++++++               ++++++++++++++++++
