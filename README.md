@@ -19,48 +19,48 @@ Parts.scad files not contain local settings, all parts are calculated from globa
 If you change a bolt, motor, bearing, used than all parts are recalculated.
 
 
-###Presets
-R360-Open.scad
-coming soon: R360-Open-Mini.scad, R360-Open-Max.scad
+1. Presets
+  * R360-Open.scad
+  * coming soon: R360-Open-Mini.scad, R360-Open-Max.scad  
 
-Only preset files should be run.
+   Only preset files should be run.  
 
-This file is the one which contain the main parameters for the printer.
-This settings are publicised, they can be freely edited to fine tune your printer.
+   This file is the one which contain the main parameters for the printer.  
+   This settings are publicised, they can be freely edited to fine tune your printer.  
 
-###Layout
-Renderer
+2. Layout
+  1. Renderer  
 
-Is a core file.
+  Is a core file.  
 
-Individual
+  2. Individual
 
-This layout is for show parts individually, cantered on 0 coordinates.
+  This layout is for show parts individually, cantered on 0 coordinates.  
 
-Production
+  3. Production
 
-This layout is for creating 3d printing or laser cutting compositions for production.
+  This layout is for creating 3d printing or laser cutting compositions for production.  
 
-Assembly
+  4. Assembly
 
-This layout is for visualise the printer. Which helps detect problems or helps decisions on hardware used.
-It also helps at building the printer, because it clearly shows how the parts fit together.
+  This layout is for visualise the printer. Which helps detect problems or helps decisions on hardware used.
+  It also helps at building the printer, because it clearly shows how the parts fit together.
 
 ###Parts
 This files are the individual parts of the printer.
 
-Part - Status
+* Part - Status
 
-Frame - Alpha
-Bed - Beta
-X-axes - Alpha
-Y-axes - Beta
-Z-axes - Gold
-Carriage - Alpha
-Extruder - Planed
+* Frame - Alpha
+* Bed - Beta
+* X-axes - Alpha
+* Y-axes - Beta
+* Z-axes - Gold
+* Carriage - Alpha
+* Extruder - Planed
 
-Filament Holder - Planed
-Electronic board holder - Planed
+* Filament Holder - Planed
+* Electronic board holder - Planed
 
 ###Vitamins
 Off the shelf parts for visualisation only.
