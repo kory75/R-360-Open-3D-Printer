@@ -46,32 +46,32 @@ If you change a bolt, motor, bearing, used than all parts are recalculated.
   This layout is for visualise the printer. Which helps detect problems or helps decisions on hardware used.
   It also helps at building the printer, because it clearly shows how the parts fit together.
 
-###Parts
-This files are the individual parts of the printer.
+3. Parts
+  This files are the individual parts of the printer.  
 
-* Part - Status
+  * Part - Status
 
-* Frame - Alpha
-* Bed - Beta
-* X-axes - Alpha
-* Y-axes - Beta
-* Z-axes - Gold
-* Carriage - Alpha
-* Extruder - Planed
+  * Frame - Alpha
+  * Bed - Beta
+  * X-axes - Alpha
+  * Y-axes - Beta
+  * Z-axes - Gold
+  * Carriage - Alpha
+  * Extruder - Planed
 
-* Filament Holder - Planed
-* Electronic board holder - Planed
+  * Filament Holder - Planed
+  * Electronic board holder - Planed
 
-###Vitamins
-Off the shelf parts for visualisation only.
+4. Vitamins
+	Off the shelf parts for visualisation only.
 
-### Libs
-Libraries sub parts and other libraries
+5. Libs
+	Libraries sub parts and other libraries
 
-###Settings
+6. Settings
 
-This file is contain general settings like bolt, rod or motor sizes.
-This file can be extended, but old values should not be altered.
+	This file is contain general settings like bolt, rod or motor sizes.
+	This file can be extended, but old values should not be altered.
 
 
 ##Documentation
