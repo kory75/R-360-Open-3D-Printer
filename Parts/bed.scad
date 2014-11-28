@@ -17,53 +17,46 @@ inner_bed_bolt_offset = 30; //from centre
 module outer_bolt_holes(){
 		//top
 		translate([0,printing_width/2-bed_bolt_offset,0]){
-			circle(bed_bolt);
+			circle(bed_bolt,center=true);
 		}
 		//bottom
 		translate([0,-printing_width/2+bed_bolt_offset,0]){
-			circle(bed_bolt);
+			circle(bed_bolt,center=true);
 		}
 		//left
 		translate([-printing_width/2+bed_bolt_offset,0,0]){
-			circle(bed_bolt);
+			circle(bed_bolt,center=true);
 		}
 		//right
 		translate([printing_width/2-bed_bolt_offset,0,0]){
-			circle(bed_bolt);
+			circle(bed_bolt,center=true);
 		}
 }
 
 
 module disc_bottom(){
-	translate([(printing_width+2*bed_vertical_gaps)/2+left_width,printing_height+bed_carrige_tickness/2+bottom_height-(printing_width+bed_vertical_gaps)/2,0]){
+	difference(){
 		union(){
 			square([printing_width,disc_lower_arms],center=true);
 			square([disc_lower_arms,printing_width],center=true);
-			circle(lower_disc_core);
+			circle(lower_disc_core,center=true);
 		}
-		circle(m8);
+		circle(m8,center=true);
 		outer_bolt_holes();
 	}
 }
 
 module disc_top(){
 	difference(){
-		circle(printing_width/2);
+		circle(printing_width/2,center=true);
 		//outer_bolt_holes();
 	}
 }
 
 module heater_rim(){
 	difference(){
-		circle(printing_width/2);
-		if(bed_shape=="circle"){
-			circle(heater_width/2+0.5);
-		}
-		if(bed_shape=="square"){
-			translate([-heater_width/2,-heater_width/2,0]){
-				square([heater_width+0.5,heater_width+0.5],centre = true);
-			}
-		}
+		circle(printing_width/2,center=true);
+		circle(heater_width/2+0.5,center=true);
 		outer_bolt_holes();
 	}
 }
@@ -95,8 +88,8 @@ module y_small_gear(){
 //TODO make parameters variables
 module gear_spacer(){
 	difference(){
-		circle(35);
-		circle(12);
+		circle(35,center=true);
+		circle(12,center=true);
 		inner_bolt_holes();
 		y_cable_hole();
 	}
@@ -106,19 +99,19 @@ module inner_bolt_holes(){
 	
 		//top
 		translate([0,inner_bed_bolt_offset,0]){
-			circle(bed_bolt);
+			circle(bed_bolt,center=true);
 		}
 		//bottom
 		translate([0,-inner_bed_bolt_offset,0]){
-			circle(bed_bolt);
+			circle(bed_bolt,center=true);
 		}
 		//left
 		translate([-inner_bed_bolt_offset,0,0]){
-			circle(bed_bolt);
+			circle(bed_bolt,center=true);
 		}
 		//right
 		translate([inner_bed_bolt_offset,0,0]){
-			circle(bed_bolt);
+			circle(bed_bolt,center=true);
 		}
 }
 

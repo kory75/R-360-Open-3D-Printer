@@ -9,7 +9,7 @@ z_linear_bearing_bolt_distance = 14.5;
 //x_rod_vertical_offset=3;
 x_rod_horizontal_offset=3 ;
 	// m4 90mm - 12 mm (2x frame) -4mm bolt - 6mm gap
-main_width_max = 90- 12 -4 - 6;
+main_width_max = 90 - 12 -4 - 6;
 main_lenght = 15;
 main_height = x_rod_distance + x_rod + (x_rod_vertical_offset *2);
 	

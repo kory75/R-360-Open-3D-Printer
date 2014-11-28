@@ -1,17 +1,14 @@
 //Z axis 
 echo("Loading Part - Z-axe");
-
 //private settings 
 //Rod holder should be the same height than the spacer.
 rod_holder_thickness = spacer_height;
-//rod holder 4mm rim
-rod_holder_outer = z_rod+4;
 
 module z_axes(show_part,detail){
 	//nema holder
 	union(){
 		if (show_part=="bottom" || show_part=="bottom_rod"){
-			translate([0,(nema_width[motors[z_axe]]-nema_bolt_offset[motors[z_axe]]*2+motor_edge_gap)/2+spacer_lenght/2,-spacer_lenght/2+motor_holder_thickness/2]){			
+			translate([0,spacer_lenght/2,-spacer_lenght/2+motor_holder_thickness/2]){			
 				motor_mount(motors[z_axe]);	
 			}
 		}

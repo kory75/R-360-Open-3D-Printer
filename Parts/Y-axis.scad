@@ -4,7 +4,6 @@
 //Slip ring top holder  
 slip_ring_outer = slip_ring_width + 10; //TODO move this to presets and change to not calculated value
 
-
 //slip ring lower fix point
 slip_ring_fix_a = slip_ring_fix_bolt_distance - slip_ring_fix_bolt * 3;
 slip_ring_fix_b = sqrt(pow(slip_ring_fix_bolt_distance,2) - pow(slip_ring_fix_a,2));
@@ -12,6 +11,9 @@ slip_ring_fix_b = sqrt(pow(slip_ring_fix_bolt_distance,2) - pow(slip_ring_fix_a,
 //lower bearing
 y_bearing_outer = y_bearing_width+4;
 y_bearing_rim_width = y_bearing_width - 4;
+
+//y total height 
+function y_height() = spacer_height*2 + slip_ring_height + slip_ring_gap - spacer_height;
 
 module y_base(){
 	union(){
@@ -28,7 +30,7 @@ module y_base(){
 		translate([0,slip_ring_width/2+spacer_lenght/2,slip_ring_height+slip_ring_gap-slip_ring_holder_height/2+spacer_lenght/2]){
 			difference(){
 				cylinder(h = slip_ring_holder_height, r=slip_ring_outer/2,  center = true, $fs=detail);
-				cylinder(h = slip_ring_holder_height+2, r=slip_ring_width/2+1,  center = true, $fs=detail);
+				cylinder(h = slip_ring_holder_height+2, r=slip_ring_width/2,  center = true, $fs=detail);
 			}
 		}
 		translate([0,0,slip_ring_height+slip_ring_gap]){
@@ -63,8 +65,8 @@ module y_base(){
 	}
 	}
 	//nema mount
-	echo(motor_holder_lenght(motors[y_axe])/2);
-	translate([0,-motor_holder_lenght(motors[y_axe])/2-spacer_lenght/2+0.1,slip_ring_height+slip_ring_gap+spacer_height/2-motor_holder_thickness/2]){
+	//echo(motor_holder_lenght(motors[y_axe])/2);
+	translate([0,-spacer_lenght/2,slip_ring_height+slip_ring_gap+spacer_height/2-motor_holder_thickness/2]){
 		rotate([180,0,0]){
 			motor_mount(motors[y_axe]);
 		}
@@ -83,7 +85,7 @@ module y_base(){
 }
 
 module slipring(){
-	translate([0,slip_ring_width/2+1+spacer_lenght/2,spacer_height*2+slip_ring_gap]){
+	translate([0,slip_ring_width/2+spacer_lenght/2,spacer_height*2+slip_ring_gap]){
 	difference(){
 	union(){
 		translate([0,0,slip_ring_height/2+5.7/2]){

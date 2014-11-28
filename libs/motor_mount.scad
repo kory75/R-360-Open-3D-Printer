@@ -1,4 +1,4 @@
-//Motors lib
+//Motors lib 
 echo ("Loading Lib - Motor Mount");
 //Deatils of the Motors [Nema 14, Nema 17, Nema 23]
 //half of the distance of the bolts from each other
@@ -17,10 +17,12 @@ nema_shaft = [5,5,6.35];
 //Offseting the motor to give a small gap for easy mounting
 motor_edge_gap=2; 
 
-module motor_mount(axe){
+module motor_mount(axe,holder_size_precent= 0.25){
 	difference(){
-		cube([nema_width[axe],motor_holder_lenght(axe),motor_holder_thickness],center=true);
-		translate([0,nema_width[axe]/2+motor_edge_gap-nema_bolt_offset[axe]/2,0]){
+		translate([0,motor_holder_lenght(axe,holder_size_precent)/2,0]){
+			cube([nema_width[axe],motor_holder_lenght(axe,holder_size_precent),motor_holder_thickness],center=true);
+		}
+		translate([0,nema_width[axe]/2+motor_edge_gap,0]){
 			linear_extrude(height = motor_holder_thickness+2, center = true, convexity = 10)	{
 				motor_mount_holes(axe);	
 			}
@@ -48,4 +50,5 @@ module motor_mount_holes(axe){
 	}
 }	
 
-function motor_holder_lenght(axe) = nema_width[axe]-nema_bolt_offset[axe]*2+motor_edge_gap;
+function motor_holder_lenght(axe,holder_size_precent = 0.25) = nema_width[axe]*holder_size_precent+motor_edge_gap;
+

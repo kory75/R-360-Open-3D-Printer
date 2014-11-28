@@ -12,9 +12,9 @@ x_idler_width = 20;
 echo ("Loading Part - Frame");
 //Private Variables
 top_height = frame_edge_width + spacer_height + max(x_axe_height,carriage_height);
-left_width = frame_edge_width + spacer_lenght + nema_width[z_axe] + spacer_lenght + z_rod_x_main_offset + x_main_width + x_idler_width;
-right_width = frame_edge_width + spacer_lenght + nema_width[z_axe] + spacer_lenght + z_rod_x_main_offset + x_main_width +  nema_width[x_axe];
-bottom_height = max(slip_ring_height + slip_ring_gap + y_bearing_height + y_bearing_rim_height + y_nut_height + frame_edge_width,nema_lenght[y_axe] + motor_holder_thickness + frame_edge_width);
+left_width = frame_edge_width + spacer_lenght + nema_width[motors[z_axe]] + spacer_lenght + z_rod_x_main_offset + x_main_width + x_idler_width;
+right_width = frame_edge_width + spacer_lenght + nema_width[motors[z_axe]] + spacer_lenght + z_rod_x_main_offset + x_main_width +  nema_width[motors[x_axe]];
+bottom_height = max(slip_ring_height + slip_ring_gap + y_bearing_height + y_bearing_rim_height + y_nut_height + frame_edge_width,nema_lenght[motors[y_axe]] + motor_holder_thickness + frame_edge_width);
 
 //legs size and position
 legs_height = 10;
@@ -28,42 +28,60 @@ bed_carrige_tickness = 6*6; //6mm parts
 
 //y holes
 //y_bolt = frame_bolt*hole_adjustment; //TODO we should use value directly to save memory
-y_bolt_center_offset = slip_ring_width/2 + spacer_lenght + nema_lenght[y_axe] /2;
-y_bolt_bottom = bottom_height - (max(slip_ring_width,nema_lenght[y_axe]) + (20 /2) ); // +10 for the top, +10 for the bottom gap around motor & slip ring hole is in the middle of them (TODO)
+y_bolt_center_offset = slip_ring_width/2 + spacer_lenght + nema_lenght[motors[y_axe]] /2;
+y_bolt_bottom = bottom_height - (max(slip_ring_width,nema_lenght[motors[y_axe]]) + (20 /2) ); // +10 for the top, +10 for the bottom gap around motor & slip ring hole is in the middle of them (TODO)
 y_bolt_top =  bottom_height - 10; //(TODO)
 
 //z holes
-	//distance from edge
-z_left_vertical_offset  = nema_width[z_axe]+spacer_lenght+frame_bolt*hole_adjustment/2;
-z_right_vertical_offset = nema_width[z_axe]+spacer_lenght+frame_bolt*hole_adjustment/2;
-z_bottom = 47; //TODO calculate from Y Base
-z_top = frame_edge_width + spacer_height/2;
+//distance from edge
+
+z_hole_offset  = frame_edge_width + spacer_lenght+nema_width[motors[z_axe]]+spacer_lenght/2+frame_bolt*hole_adjustment;
+z_hole_offset_outer = frame_edge_width + spacer_lenght/2;
+z_hole_bottom = bottom_height+bed_carrige_tickness-spacer_height/2; //TODO add calculate max( (extruder_hangout) , z_bearing_height + z_bearing_mount_height /2 , z_nut_height + z_coupler_height )
+z_hole_top = frame_edge_width + spacer_height/2;
+
+//functions
+//frame width
+function frame_width() = printing_width+left_width+right_width+2*bed_vertical_gaps;
+//frame_height	
+function frame_height() = printing_height+bottom_height+top_height+bed_carrige_tickness+legs_height; //TODO add extruder hangout
+//z rod lenght
+function z_rod_lenght() = (frame_height()/2-legs_height/2-z_hole_top) - (-frame_height()/2+legs_height/2+z_hole_bottom)+ spacer_lenght;
+//z lead screw lenght
+function z_lead_screw_lenght() = printing_height+10+20; //TODO add nut height and coupling half height
+//x rod lenght
+function x_rod_lenght() = printing_width+nema_width[motors[x_axe]]+10+2*10; //TODO bearing width, 2x X midsection width
 
 
+echo ("frame width:",frame_width(),"mm");
+echo ("frame height:",frame_height(),"mm");
+echo("z rod lenght:",z_rod_lenght(),"mm");
+echo("z lead screw lenght:",z_lead_screw_lenght(),"mm?"); 
+echo("x rod lenght",x_rod_lenght(),"mm?"); 
 
 module z_holes(){
-	echo("z rod lenght:",printing_height+bottom_height+top_height+bed_carrige_tickness-z_top-z_bottom+spacer_height,"mm");
-	echo("z lead screw lenght:",printing_height+10+20,"mm?"); //TODO add nut height and coupling half height
-	echo("x rod lenght",printing_width+nema_width[x_axe]+10+2*10,"mm?"); //TODO bearing width, 2x X midsection width
 	union(){
 		//left bottom
-		translate([z_left_vertical_offset,z_bottom,0]){
-			circle(frame_bolt*hole_adjustment);
+		translate([-frame_width()/2+z_hole_offset,-frame_height()/2+legs_height/2+z_hole_bottom,0]){
+			circle(frame_bolt*hole_adjustment,center=true);
 		}
-		translate([spacer_lenght/2,z_bottom,0]){
-			circle(frame_bolt*hole_adjustment);
+		translate([-frame_width()/2+z_hole_offset_outer,-frame_height()/2+legs_height/2+z_hole_bottom,0]){
+			circle(frame_bolt*hole_adjustment,center=true);
 		}
 		//right bottom
-		translate([printing_width+left_width+right_width+2*bed_vertical_gaps-z_left_vertical_offset,z_bottom,0]){
-			circle(frame_bolt*hole_adjustment);
+		translate([frame_width()/2-z_hole_offset,-frame_height()/2+legs_height/2+z_hole_bottom,0]){
+			circle(frame_bolt*hole_adjustment,center=true);
+		}
+		translate([frame_width()/2-z_hole_offset_outer,-frame_height()/2+legs_height/2+z_hole_bottom,0]){
+			circle(frame_bolt*hole_adjustment,center=true);
 		}
 		//left top
-		translate([z_left_vertical_offset,printing_height+bottom_height+top_height+bed_carrige_tickness-z_top,0]){
-			circle(frame_bolt*hole_adjustment);
+		translate([-frame_width()/2+z_hole_offset,frame_height()/2-legs_height/2-z_hole_top,0]){
+			circle(frame_bolt*hole_adjustment,center=true);
 		}
 		//right top
-		translate([printing_width+left_width+right_width+2*bed_vertical_gaps-z_left_vertical_offset,printing_height+bottom_height+top_height+bed_carrige_tickness-z_top,0]){
-			circle(frame_bolt*hole_adjustment);
+		translate([frame_width()/2-z_hole_offset,frame_height()/2-legs_height/2-z_hole_top,0]){
+			circle(frame_bolt*hole_adjustment,center=true);
 		}
 	}
 }
@@ -79,39 +97,31 @@ module y_holes(){
 	}
 }
 
-module ramps_1_4_holes(){
-}
-
-module lcd_holes(){
-	//no lcd planed
-}
-
 //frame
 module frame(){
-	echo ("frame width:",printing_width+left_width+right_width+2*bed_vertical_gaps,"mm");
-	echo ("frame height:",printing_height+bottom_height+top_height+bed_carrige_tickness+legs_height,"mm");
 	difference(){
 		union(){
 			difference(){
-				square([printing_width+left_width+right_width+2*bed_vertical_gaps,printing_height+bottom_height+top_height+bed_carrige_tickness],center=false);
-
+				// frame
+				square([frame_width(),frame_height()-legs_height],center=true);
+				//rounding
 				difference(){
-					square([printing_width+left_width+right_width+2*bed_vertical_gaps,printing_height+bottom_height+top_height+bed_carrige_tickness],center=false);
-					translate([(printing_width+left_width+right_width+2*bed_vertical_gaps)/2,(printing_height+bottom_height+top_height+bed_carrige_tickness)/2,0]){
-						circle(sqrt( pow(printing_width+left_width+right_width+2*bed_vertical_gaps,2) + pow(printing_height+bottom_height+top_height+bed_carrige_tickness,2) )/2-10  )	;
-					}
+					square([frame_width(),frame_height()-legs_height],center=true);
+					circle(sqrt( pow(printing_width+left_width+right_width+2*bed_vertical_gaps,2) + pow(printing_height+bottom_height+top_height+bed_carrige_tickness,2) )/2-10, center=true )	;
 				}
 			}
-			translate([leg_offset,-legs_height,0]){
-				square([legs_width,legs_height],center=false);
+			//leg left
+			translate([-frame_width()/2+leg_offset,-frame_height()/2,0]){
+				square([legs_width,legs_height],center=true);
 			}
-			translate([printing_width+left_width+right_width+2*bed_vertical_gaps-legs_width-leg_offset,-legs_height,0]){
-				square([legs_width,legs_height],center=false);
+			//leg right
+			translate([frame_width()/2-leg_offset,-frame_height()/2,0]){
+				square([legs_width,legs_height],center=true);
 			}
 		}
-
-		translate([left_width,bottom_height,0]){
-				square([printing_width+2*bed_vertical_gaps,printing_height+bed_carrige_tickness],center=false);
+		//frame cut out
+		translate([-frame_width()/2+(printing_width+2*bed_vertical_gaps)/2+left_width,-frame_height()/2+legs_height/2+(printing_height+bed_carrige_tickness+extruder_carriage_difference)/2+bottom_height,0]){
+				square([printing_width+2*bed_vertical_gaps,printing_height+bed_carrige_tickness+extruder_carriage_difference],center=true);
 		}
 		z_holes();
 		y_holes();
@@ -123,10 +133,19 @@ module frame_back(){
 	difference(){
 		frame();
 		fillament_holders();
+		extruder_holder();
+		electronics_holder();
 	}
 }
 
 module fillament_holders(){
 
-}	
+}
 
+module extruder_holder(){
+
+}
+
+module electronics_holder(){
+
+}	
