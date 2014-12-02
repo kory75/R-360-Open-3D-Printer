@@ -14,9 +14,10 @@ include <./settings.scad>
 //Using m5 90 mm bolts - 6 mm - 6mm frame front, back - 4mm for nuts 
 frame_thickness = 6;
 frame_nut_thickness = 4;
-frame_bolt_lenght = 100;
-frame_bolt = m5;
+frame_bolt_lenght = 140;
+frame_bolt = m6;
 frame_gap = frame_bolt_lenght - (frame_thickness*2) - frame_nut_thickness; //TODO private settings move this to rendered as this should not be changed
+echo("Frame Gap: ",frame_gap,"mm");
 
 //Minimum distance of holes from the outer edge of the frame 
 frame_edge_width = 10;
@@ -34,22 +35,29 @@ extruder_carriage_difference = 15;
 
 //Rods  (supports m3, m4, m5 , m6, m8, m10, m12, m16 sizes)
 y_shaft = m12;
-z_rod = m12;
-z_axe = m5;
-x_rod = m8;
-
-//rods and bolts can be too tight on some 3d printers. This setting we can adjust hole sizes. default is 110% (1.1)
-hole_adjustment = 1.1;
+z_rod = m8;
+z_leadscrew = m10;
+x_rod = m10;
+x_leadscrew = m10;
 
 // Z axes
 z_nut_size = 10; 
 //Z rod holder 4mm rim
 rod_holder_outer = z_rod+4;
 
+//Z bearing
+z_bearing = bearring_SC8UU;
+
+//Y bearing 
+y_bearing = bearring_61801_2RS;
+
+//X bearing
+x_bearing = bearring_LM8UU;
+
 // X axes
 //Distance beetwen x rods (prusa 3 compatibility)
 x_rod_distance = 46;
-x_rod_vertical_offset = 3;//(TODO) this should be in the X-axis.scad but then it breaks... possible variable duplication
+x_rod_vertical_offset = 3;//(TODO) is this used anymore? //this should be in the X-axis.scad but then it breaks... possible variable duplication
 
 //Suported motors 
 //[nema_14,nema_17,nema_23]
@@ -85,13 +93,13 @@ y_bearing_rim_height = 2; //TODO use this at frame too
 y_nut_height = 8;
 
 //How to render parts [individual,production,assembly]
-Layout = assembly;
+Layout = individual;
 
 //production layout method [3d_printed,lasercut]
 production_method = 3d_printed;
 
 //Display options - Which Parts should be rendered? (individual and production only)
-show_frame_front = 1;
+show_frame_front = 0;
 show_frame_back = 0;
 
 show_bed_top = 0;
@@ -104,7 +112,7 @@ show_small_y_gears = 0;
 
 show_z_axis_top = 0;
 show_z_axis_bottom = 0;
-show_z_axis_bottom_rod = 0;
+show_z_axis_bottom_rod = 1;
 
 show_x_motor = 0;
 show_x_idler = 0;

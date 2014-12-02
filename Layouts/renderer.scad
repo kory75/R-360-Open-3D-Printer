@@ -3,6 +3,7 @@ echo("Loading Renderer");
 //include libs
 include <../libs/shapes.scad>
 include <../libs/motor_mount.scad>
+include <../libs/bearing.scad>
 include <../libs/spacer.scad>
 include <../../MCAD-master/involute_gears.scad>;
 
@@ -33,3 +34,4 @@ if (Layout == assembly){
 if (Layout == production){
 	production();
 }
+
