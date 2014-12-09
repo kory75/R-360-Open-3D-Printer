@@ -24,6 +24,10 @@ if(frame_thickness > 0){
 	if(show_heater_rim) {
 		heater_rim();
 	}
+	if(show_y_cross_frame) {
+		y_cross_frame();
+	}
+	
 	}
 	if(show_large_y_gears) {
 		y_large_gear();

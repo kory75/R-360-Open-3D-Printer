@@ -16,6 +16,8 @@ left_width = frame_edge_width + spacer_lenght + nema_width[motors[z_axe]] + spac
 right_width = frame_edge_width + spacer_lenght + nema_width[motors[z_axe]] + spacer_lenght + z_rod_x_main_offset + x_main_width +  nema_width[motors[x_axe]];
 bottom_height = max(slip_ring_height + slip_ring_gap + y_bearing_height + y_bearing_rim_height + y_nut_height + frame_edge_width,nema_lenght[motors[y_axe]] + motor_holder_thickness + frame_edge_width);
 
+frame_offset = left_width - right_width;
+
 //legs size and position
 legs_height = 10;
 legs_width = 30;
@@ -48,7 +50,7 @@ function frame_height() = printing_height+bottom_height+top_height+bed_carrige_t
 //z rod lenght
 function z_rod_lenght() = (frame_height()/2-legs_height/2-z_hole_top) - (-frame_height()/2+legs_height/2+z_hole_bottom)+ spacer_lenght;
 //z lead screw lenght
-function z_lead_screw_lenght() = printing_height+10+20; //TODO add nut height and coupling half height
+function z_lead_screw_lenght() = printing_height+10+20; //TODO add nut height and coupling half height minus motor shaft lenght
 //x rod lenght
 function x_rod_lenght() = printing_width+nema_width[motors[x_axe]]+10+2*10; //TODO bearing width, 2x X midsection width
 
@@ -125,6 +127,12 @@ module frame(){
 		}
 		z_holes();
 		y_holes();
+		translate([printing_width/2+bed_vertical_gaps-frame_thickness/2+frame_offset/2,-frame_height()/2+bottom_height/4],0){
+			square([frame_thickness,bottom_height/2],center=true);
+		}
+		translate([-printing_width/2-bed_vertical_gaps+frame_thickness/2+frame_offset/2,-frame_height()/2+bottom_height/4],0){
+			square([frame_thickness,bottom_height/2],center=true);
+		}
 	}	
 	
 }
@@ -135,6 +143,63 @@ module frame_back(){
 		fillament_holders();
 		extruder_holder();
 		electronics_holder();
+	}
+}
+
+//TODO add coupling/2 + Leadscrew Nut lenght + Y nut holder width
+//frame tichness 2x cross end 2x edge 1x motor holder
+function y_cross_frame_width() = printing_lenght+frame_thickness*5+nema_lenght[motors[y_axe]];
+
+function y_cross_frame_motor_offset() = frame_thickness+nema_lenght[motors[y_axe]];
+
+module y_cross_frame(){
+	difference(){
+		translate([y_cross_frame_motor_offset(),0,0]){
+			square([y_cross_frame_width(),bottom_height],center=true);
+		}
+
+		//frame gap right end
+		translate([-y_cross_frame_width()/2+frame_thickness*3/2+y_cross_frame_motor_offset(),bottom_height/4,0]){
+			square([frame_thickness,bottom_height/2],center=true);
+		}
+
+		//frame gap left end
+		translate([y_cross_frame_width()/2-frame_thickness*3/2+y_cross_frame_motor_offset(),bottom_height/4,0]){
+			square([frame_thickness,bottom_height/2],center=true);
+		}
+
+		//frame gap right
+		translate([-frame_gap/2-frame_thickness/2,bottom_height/4,0]){
+			square([frame_thickness,bottom_height/2],center=true);
+		}
+		//frame gap left
+		translate([frame_gap/2+frame_thickness/2,bottom_height/4,0]){
+			square([frame_thickness,bottom_height/2],center=true);
+		}
+
+		//cabel hole
+		translate([0,bottom_height/2,0]){
+			circle(bottom_height/2,center=true);
+		}
+
+		//TODO Separate Motor Holder
+		//frame gap motor holder
+		translate([y_cross_frame_width()/2-frame_thickness*5/2,bottom_height/4,0]){
+			square([frame_thickness,bottom_height/2],center=true);
+		}
+	}
+	//leg left
+	translate([y_cross_frame_width()/2-legs_width+y_cross_frame_motor_offset(),-bottom_height/2-legs_height/2,0]){
+		square([legs_width,legs_height],center=true);
+	}
+	translate([-y_cross_frame_width()/2+legs_width+y_cross_frame_motor_offset(),-bottom_height/2-legs_height/2,0]){
+		square([legs_width,legs_height],center=true);
+	}
+}
+
+module y_end_frame(type){
+	if(type == "motor"){
+
 	}
 }
 

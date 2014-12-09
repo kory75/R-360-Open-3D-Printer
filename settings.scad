@@ -83,6 +83,23 @@ bearing_block_bolt_lenght_offset = [0,0,0,0,0,0,18,21,26];
 
 //Following settings are needed for rendering the parts, pro users only!
 
+//Printer types 
+
+//Rotating disk based printer
+polar_printer = 0;
+
+//Cartesian coordinates based printer
+cartesian_printer = 1;
+
+//Exchangable y axes supports both polar or cartesian coordinates
+dual_printer = 2;
+
+//delta coordinates based printer
+delta_printer = 3;
+
+//Mixed printer delta for X Z and polar Y
+polar_delta = 4;
+
 //layout types
 individual = 0;
 production = 1;
