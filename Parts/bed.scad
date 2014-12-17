@@ -64,7 +64,7 @@ module heater_rim(){
 module y_large_gear(){
 			echo ("rendering gear...");
 			difference(){
-				gear(number_of_teeth=90,circular_pitch=225, diametral_pitch=false,gear_thickness = y_gear_thickness,rim_thickness = y_gear_thickness,hub_thickness = y_gear_thickness, bore_diameter = 12,circles=0,involute_facets=5);
+				gear(number_of_teeth=1440,circular_pitch=225, diametral_pitch=false,gear_thickness = y_gear_thickness,rim_thickness = y_gear_thickness,hub_thickness = y_gear_thickness, bore_diameter = 12,circles=0,involute_facets=5);
 				translate([0,0,frame_thickness/2]){
 					inner_bolt_holes();
 					y_cable_hole();

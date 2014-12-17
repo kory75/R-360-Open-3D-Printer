@@ -197,9 +197,31 @@ module y_cross_frame(){
 	}
 }
 
-module y_end_frame(type){
+module y_end_frame(type="motor"){
 	if(type == "motor"){
-
+	union(){
+		difference(){
+			square([printing_width+2*bed_vertical_gaps+frame_thickness*2,bottom_height],center=true);
+			translate([printing_width/2+bed_vertical_gaps-frame_thickness/2,-bottom_height/4,0]) {
+				square([frame_thickness,bottom_height/2],center=true);
+			}
+			translate([-printing_width/2-bed_vertical_gaps+frame_thickness/2,-bottom_height/4,0]) {
+				square([frame_thickness,bottom_height/2],center=true);
+			}
+		}
+		translate([printing_width/2+bed_vertical_gaps-frame_thickness*2-15,-bottom_height/2-15,0]){
+			difference(){
+				square([30,30],center=true);
+				circle(y_rod,center=true);
+			}
+		}
+		translate([-printing_width/2-bed_vertical_gaps+frame_thickness*2+15,-bottom_height/2-15,0]){
+			difference(){
+				square([30,30],center=true);
+				circle(y_rod,center=true);
+			}
+		}
+	}
 	}
 }
 

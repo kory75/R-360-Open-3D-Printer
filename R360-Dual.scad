@@ -12,13 +12,13 @@ include <./settings.scad>
 
 //Printer setup is one of [polar_printer,cartesian_printer,dual_printer,delta_printer]
 //This file supports polar, for other setups please see other preset files like: (R-360 Cartesian Preset)
-printer_setup = polar_printer;
+printer_setup = cartesian_printer;
 
 //Frame Thickness Acrilic or wood 6mm Aluminum 4-5mm it depends on the size of the printer
 //Using m5 90 mm bolts - 6 mm - 6mm frame front, back - 4mm for nuts 
 frame_thickness = 6;
 frame_nut_thickness = 4;
-frame_bolt_lenght = 110;
+frame_bolt_lenght = 130;
 frame_bolt = m6;
 frame_gap = frame_bolt_lenght - (frame_thickness*2) - frame_nut_thickness; //TODO private settings move this to rendered as this should not be changed
 echo("Frame Gap: ",frame_gap,"mm");
@@ -39,14 +39,11 @@ heater_width = 214;
 extruder_carriage_difference = 15;
 
 //Rods  (supports m3, m4, m5 , m6, m8, m10, m12, m16 sizes)
-y_shaft = m12; //Polar printer only
-z_rod = m10;
+y_shaft = m12;
+z_rod = m8;
 z_leadscrew = m10;
 x_rod = m10;
 x_leadscrew = m10;
-
-y_rod = m10; //Cartesian printer only
-y_leadscrew = m10; //Cartesian printer only
 
 // Z axes
 z_nut_size = 10; 
@@ -54,7 +51,7 @@ z_nut_size = 10;
 rod_holder_outer = z_rod+4;
 
 //Z bearing
-z_bearing = bearring_SC10UU;
+z_bearing = bearring_SC8UU;
 
 //Y bearing 
 y_bearing = bearring_61801_2RS;
@@ -101,13 +98,13 @@ y_bearing_rim_height = 2; //TODO use this at frame too
 y_nut_height = 8;
 
 //How to render parts [individual,production,assembly]
-Layout = individual;
+Layout = assembly;
 
 //production layout method [3d_printed,lasercut]
 production_method = 3d_printed;
 
 //Display options - Which Parts should be rendered? (individual and production only)
-show_frame_front = 0;
+show_frame_front = 1;
 show_frame_back = 0;
 
 show_bed_top = 0;
@@ -115,14 +112,12 @@ show_bed_bottom = 0;
 show_heater_rim = 0;
 show_gear_spacer = 0;
 
-show_large_y_gears = 1;
+show_large_y_gears = 0;
 show_small_y_gears = 0;
 
 show_z_axis_top = 0;
 show_z_axis_bottom = 0;
 show_z_axis_bottom_rod = 0;
-show_z_axis_side = -1; // 1 or -1 TODO add to individual layout
-
 
 show_x_motor = 0;
 show_x_idler = 0;
@@ -130,7 +125,6 @@ show_x_idler = 0;
 show_y_base = 0;
 
 show_y_cross_frame = 0;
-show_y_end_frame = 0;
 
 //Render
 include <./Layouts/renderer.scad>

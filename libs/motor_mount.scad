@@ -1,8 +1,6 @@
 //Motors lib 
 echo ("Loading Lib - Motor Mount");
 
-//Offseting the motor to give a small gap for easy mounting
-motor_edge_gap=2; 
 
 module motor_mount(axe,holder_size_precent= 0.25){
 	difference(){

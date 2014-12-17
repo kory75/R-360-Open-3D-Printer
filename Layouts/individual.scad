@@ -27,6 +27,9 @@ if(frame_thickness > 0){
 	if(show_y_cross_frame) {
 		y_cross_frame();
 	}
+	if(show_y_end_frame) {
+		y_end_frame();
+	}
 	
 	}
 	if(show_large_y_gears) {
@@ -63,13 +66,13 @@ if(frame_thickness > 0){
 }
 //Z-axis
 if(show_z_axis_top){
-	z_axes("top",detail);
+	z_axes("top",1);
 }
 if(show_z_axis_bottom){
-	z_axes("bottom",detail);
+	z_axes("bottom",1);
 }
 if(show_z_axis_bottom_rod){
-	z_axes("bottom_rod",detail);
+	z_axes("bottom_rod",1);
 }
 //X-axis
 if(show_x_motor){

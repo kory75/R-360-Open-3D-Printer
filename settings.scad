@@ -16,6 +16,9 @@ nema_23 = 2;
 //rods and bolts can be too tight on some 3d printers. This setting we can adjust hole sizes. default is 110% (1.1)
 hole_adjustment = 1.1;
 
+//Offseting the motor to give a small gap for easy mounting
+motor_edge_gap=2; 
+
 //bolts and rods
 m3 = 1.5;
 m4 = 2;
@@ -39,7 +42,10 @@ nema_width = [35.5,42,56.4];
 //lenght of the motor. This value may need to get adjusted as it depends of many factors like brand and strenght
 nema_lenght = [28,45,56];
 //shaft of the motor 
+//shaft diameter
 nema_shaft = [5,5,6.35];
+//shaft lenght
+nema_shaft_lenght = [15.2,23.9,20.6];
 
 //Details of bearings [608,61801_2RS,LM6UU,LM8UU,LM10UU,LM12UU,SC8UU,SC10UU,SC12UU]
 bearring_608 = 0; 
@@ -101,8 +107,11 @@ delta_printer = 3;
 polar_delta = 4;
 
 //layout types
+//Individual Layout is for display parts on at the time
 individual = 0;
+//Production layout is for 
 production = 1;
+//Assembler layout
 assembly = 2;
  
 //axes
