@@ -12,7 +12,7 @@ include <./settings.scad>
 
 //Printer setup is one of [polar_printer,cartesian_printer,dual_printer,delta_printer]
 //This file supports polar, for other setups please see other preset files like: (R-360 Cartesian Preset)
-printer_setup = polar_printer;
+printer_setup = cartesian_printer;
 
 //Frame Thickness Acrilic or wood 6mm Aluminum 4-5mm it depends on the size of the printer
 //Using m5 90 mm bolts - 6 mm - 6mm frame front, back - 4mm for nuts 
@@ -28,9 +28,9 @@ frame_edge_width = 10;
 
 //Printing Dimensions 
 //This preset meant to use between 200mm to 500mm  Please check out other presets for larger or smaller printers R-360-Max, R-360-Mini
-printing_height = 400; //mm 
-printing_width = 300; //mm ! Dimeter for polar printer ! 
-printing_lenght = 300; //mm ! Ignored for polar printer ! Only used for Cartesian setup.
+printing_height = 500; //mm 
+printing_width = 400; //mm ! Dimeter for polar printer ! Cartesian X axes Width
+printing_lenght = 400; //mm ! Ignored for polar printer ! Only used for Cartesian setup.  Cartesian Y axes Lenght
 
 //Heated bed heater (MK2a, MK3) size and shape
 heater_width = 214; 
@@ -101,7 +101,7 @@ y_bearing_rim_height = 2; //TODO use this at frame too
 y_nut_height = 8;
 
 //How to render parts [individual,production,assembly]
-Layout = individual;
+Layout = assembly;
 
 //production layout method [3d_printed,lasercut]
 production_method = 3d_printed;
@@ -115,12 +115,12 @@ show_bed_bottom = 0;
 show_heater_rim = 0;
 show_gear_spacer = 0;
 
-show_large_y_gears = 1;
+show_large_y_gears = 0;
 show_small_y_gears = 0;
 
 show_z_axis_top = 0;
 show_z_axis_bottom = 0;
-show_z_axis_bottom_rod = 0;
+show_z_axis_bottom_rod = 1;
 show_z_axis_side = -1; // 1 or -1 TODO add to individual layout
 
 

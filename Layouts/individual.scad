@@ -76,12 +76,12 @@ if(show_z_axis_bottom_rod){
 }
 //X-axis
 if(show_x_motor){
-	x_axis_leadscrew("motor");
-	//x_axis("motor");
+	x_axis_leadscrew_panel("motor");
+	
 }
 if(show_x_idler){
-	x_axis_leadscrew("idler");
-	//x_axis("idler");
+	x_axis_leadscrew_panel("idler");
+	
 }
 //Y-axis
 if(show_y_base){

@@ -61,7 +61,7 @@ bearring_SC12UU = 8;
 
 //bearing outside diameter
 bearing_width = [22,21,12,15,19,21,0,0,0];
-//bearing height (tickhness)
+//bearing height (tickhness) parallel with the rod
 bearing_lenght = [7,5,19,24,29,30,30,35,36];
 //bearing inside diameter
 bearing_hole = [m8,m12,m6,m8,m10,m12,m8,m10,m12];

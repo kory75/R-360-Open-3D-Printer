@@ -26,6 +26,12 @@ module assembly(){
 	//z-rod right
 	color([0.8,0.8,0.8]) translate([-frame_width()/2+z_hole_offset+spacer_lenght/2+z_rod,z_axes_offset(),frame_height()/2-legs_height/2-z_hole_top-z_rod_lenght()/2+spacer_lenght/2]) rotate([0,0,0]) cylinder(h = z_rod_lenght(), r=z_rod,  center = true, $fs=detail);
 
+    //z_lead_screw right
+    color([0.8,0.8,0.8]) translate([-frame_width()/2+z_hole_offset+spacer_lenght/2+z_rod-nema_width[motors[z_axe]]/2,z_axes_offset(),frame_height()/2-legs_height/2-z_hole_top-z_rod_lenght()/2+spacer_lenght/2]) rotate([0,0,0]) 
+    linear_extrude(height = z_lead_screw_lenght(), center = true, convexity = 10, twist = -10200, $fn=50) translate([1,0,0]) circle(r = z_rod)
+    //cylinder(h = z_lead_screw_lenght(), r=z_rod,  center = true, $fs=detail);
+    
+    
 	if(printer_setup == polar_printer || printer_setup == dual_printer){
 	//y base
 	color([0.5,0,0]) translate([bed_center()+slip_ring_width/2+spacer_lenght/2,0,-frame_height()/2+legs_height+bottom_height-y_height()]) rotate([0,0,90]) y_base();
